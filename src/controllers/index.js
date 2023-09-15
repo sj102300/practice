@@ -1,4 +1,4 @@
 import userController from "./users";
-// import reviewController from './reviews';
+import reviewController from './reviews';
 
 export default [userController];

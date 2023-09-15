@@ -49,11 +49,11 @@ class UserController {
 
     createUser(req, res, next) {
         try {
-            if(req.body.name === undefined){
-                throw { status: 400, message: '이름이 없습니다.'};
+            if (req.body.name === undefined) {
+                throw { status: 400, message: '이름이 없습니다.' };
             }
-            if(req.body.age === undefined){
-                throw { status: 400 , message: '나이가 없습니다.'};
+            if (req.body.age === undefined) {
+                throw { status: 400, message: '나이가 없습니다.' };
             }
             this.users.push({
                 id: new Date().getTime(),
@@ -68,45 +68,45 @@ class UserController {
     }
 
     updateUser(req, res, next) {
-        try{
+        try {
             let id = Number(req.params.id);
             let targetUserIdx = users.findIndex((user) => user.id === id);
             //없는 유저 정보를 수정하는 경우
             if (targetUserIdx === -1) {
-                throw {status: 404, message: '유저를 찾을 수 없습니다.'};
+                throw { status: 404, message: '유저를 찾을 수 없습니다.' };
             }
-            if (req.body.name === undefined){
-                throw {status:400, message: '이름이 없습니다'}
+            if (req.body.name === undefined) {
+                throw { status: 400, message: '이름이 없습니다' }
             }
-            if(req.body.age === undefined){
-                throw { status: 400 , message: '나이가 없습니다.'};
+            if (req.body.age === undefined) {
+                throw { status: 400, message: '나이가 없습니다.' };
             }
             users[targetUserIdx].name = req.body.name;
             users[targetUserIdx].age = req.body.age;
             res.status(204).json({});
         }
-        catch(err){
+        catch (err) {
             next(err);
         }
-        }
+    }
 
     deleteUser(req, res, next) {
-        try{
+        try {
             let id = Number(req.params.id);
             let targetUserIdx = users.findIndex((user) => user.id === id);
             //없는 유저 정보를 삭제하는 경우
             if (targetUserIdx === -1) {
-                throw {status: 404, message: '유저를 찾을 수 없습니다.'};
+                throw { status: 404, message: '유저를 찾을 수 없습니다.' };
             }
             users = users.filter((user) => {
                 return user.id !== id;
             })
-            res.status(204).json({});    
+            res.status(204).json({});
         }
-        catch(err){
+        catch (err) {
             next(err);
         }
-        }
+    }
 }
 
 const userController = new UserController();
