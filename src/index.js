@@ -16,31 +16,16 @@ app.listen(8000, () => {
     console.log('server is running on port 8000');
 })
 
+//controller 달기
 Controllers.forEach((controller)=>{
     app.use(controller.path, controller.router);
 })
 
-//유저 정보 수정
-app.patch('/users/:id', (req, res) => {
-    let id = Number(req.params.id);
-    console.log(id);
-    let targetUserIdx = users.findIndex((user) => user.id === id);
-    //없는 유저 정보를 수정하는 경우
-    if(targetUserIdx === -1){
-        return res.status(500).json();
-    }
-    users[targetUserIdx].name = req.body.name;
-    users[targetUserIdx].age = req.body.age;
-    res.status(204).json({});
-})
 
-//유저 삭제
-app.delete('/users/:id', (req, res) => {
-    let id = Number(req.params.id);
-    users = users.filter((user)=>{
-        return user.id !== id;
-    })
-    res.status(204).json({});
+//error middleware 달기
+app.use((err, req, res, next)=>{
+    console.log(err);
+    res.status(err.status || 500 ).json({ message: err.message || '서버에서 에러가 발생했습니다.'});
 })
 
 const today = new Date();
