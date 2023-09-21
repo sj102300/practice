@@ -3,6 +3,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import dayjs from 'dayjs'
 import Controllers from './controllers';
+import { swaggerDocs, options } from './swagger';
+import swaggerUI from 'swagger-ui-express'
 
 //yarn add express
 const app = express();
@@ -20,6 +22,12 @@ app.listen(8000, () => {
 Controllers.forEach((controller)=>{
     app.use(controller.path, controller.router);
 })
+
+//스웨거 ui 만들기 
+app.get("/swagger.json", (req,res)=>{
+    res.status(200).json(swaggerDocs);
+});
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(undefined, options));
 
 
 //error middleware 달기
