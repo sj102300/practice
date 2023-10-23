@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { UserDTO } from './dto';
 
 //Router
 class UserController {
@@ -7,7 +8,8 @@ class UserController {
     users = [
         {
             id: 1,
-            name: 'sj',
+            firstName: 'sj',
+            lastName: 'Lee',
             age: 21
         }
     ];
@@ -19,6 +21,7 @@ class UserController {
     init() {
         this.router.get('/', this.getUsers.bind(this));
         this.router.get('/:id', this.getUser.bind(this));
+        this.router.get('/:id/fullName', this.getUserFullName.bind(this));
         this.router.post('/', this.createUser.bind(this));
         this.router.patch('/:id', this.updateUser.bind(this));
         this.router.patch('/:id', this.updateUser.bind(this));
@@ -26,7 +29,8 @@ class UserController {
 
     getUsers(req, res, next) {
         try {
-            res.status(200).json({ users: this.users });
+            const users = this.users.map((user)=> new UserDTO(user));
+            res.status(200).json({ users });
         }
         catch (err) {
             next(err);
@@ -47,9 +51,25 @@ class UserController {
         }
     }
 
+    getUserFullName(req, res, next){
+        try{
+            let id = Number(req.params.id);
+            let user = this.users.find((user) => { return user.id === id });
+            if (user === undefined) {
+                throw { status: 404, message: '유저를 찾을 수 없습니다' };
+            }
+
+            const targetUser = new UserDTO(user);
+            res.status(200).json({ fullName: targetUser.getFullName()})
+            
+        }catch(err){
+            next(err);
+        }
+    }
+
     createUser(req, res, next) {
         try {
-            if (req.body.name === undefined) {
+            if (req.body.firstName === undefined || req.body.lastName === undefined) {
                 throw { status: 400, message: '이름이 없습니다.' };
             }
             if (req.body.age === undefined) {
@@ -57,7 +77,8 @@ class UserController {
             }
             this.users.push({
                 id: new Date().getTime(),
-                name: req.body.name,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 age: req.body.age
             })
             res.status(201).json({ users: this.users });
