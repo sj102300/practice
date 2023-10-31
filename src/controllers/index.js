@@ -1,4 +1,5 @@
-import userController from "./users";
-import reviewController from './reviews';
+import { UserController } from "../users";
 
-export default [userController];
+const Controllers = [UserController];
+
+export default Controllers;

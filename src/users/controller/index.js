@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UserDTO } from './dto';
+import { UserDTO } from '../dto';
 
 //Router
 class UserController {
