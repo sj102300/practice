@@ -1,14 +1,14 @@
-export class UserDTO{
+export class UsersDTO{
     id;
-    firstName;
-    lastName;
+    name;
     age;
+    phoneNumber
 
     constructor(user){
         this.id = user.id;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
+        this.name = user.name;
         this.age = user.age;
+        this.phoneNumber = user.phoneNumber;
     }
 
     getFullName(){
