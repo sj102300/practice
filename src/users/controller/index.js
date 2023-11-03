@@ -7,7 +7,7 @@ import { pagination } from '../../middleware/pagination';
 class UserController {
     router;
     path = '/users';
-    userService
+    userService;
 
     constructor() {
         this.router = Router();
@@ -15,12 +15,13 @@ class UserController {
         this.init();
     }
 
+
     init() {
         this.router.get('/', pagination, this.getUsers.bind(this));
         this.router.get('/:id', this.getUser.bind(this));
         this.router.post('/', this.createUser.bind(this));
         this.router.patch('/:id', this.updateUser.bind(this));
-        this.router.patch('/:id', this.updateUser.bind(this));
+        this.router.delete('/:id', this.deleteUser.bind(this));
     }
 
     async getUsers(req, res, next) {
@@ -40,7 +41,7 @@ class UserController {
         try {
             const { id } = req.params
             const user = await this.userService.findUserById(id)
-            res.status(200).json({ user: new UserDTO(user) });
+            res.status(200).json({ user: new UsersDTO(user) });
         }
         catch (err) {
             next(err);

@@ -9,22 +9,59 @@ export class PostService {
             }
         })
         if (!post) throw { status: 404, message : "유저를 찾을 수 없습니다!" };
-        return user
+        return post
     }
 
     async findPosts({skip, take}) {
-        
+        const posts = await database.post.findMany({
+            skip, take
+        });
+        const count = await database.post.count();
+        return { posts, count }
+
     }
 
-    async createUser(props) {
-        
+    async createPost(props) {
+        const newPost = await database.post.create({
+            data: {
+                title: props.title,
+                content: props.content,
+                userId: props.userId
+            }
+        })
+        return newPost.id;
     }
 
-    async updateUser(id, props) {
-        
+    async updatePost(id, props) {
+        const isExist = await database.post.findUnique({
+            where: {
+                id,
+            }
+        });
+        if(!isExist) throw {status:404, message:"게시글을 찾을 수 없습니다!"};
+        await database.post.update({
+            where: {
+                id: isExist.id
+            },
+            data: {
+                title: props.title,
+                content: props.content,
+                userId: props.userId,
+            }
+        })
     }
 
-    async deleteUser(id) {
-        
+    async deletePost(id) {
+        const isExist = await database.post.findUnique({
+            where: {
+                id,
+            }
+        });
+        if (!isExist) throw { status:404, message: "게시글을 찾을 수 없습니다!"};
+        await database.post.delete({
+            where: {
+                id: isExist.id,
+            }
+        })
     }
 }
