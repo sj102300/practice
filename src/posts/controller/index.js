@@ -98,10 +98,3 @@ class PostController {
 
 const postController = new PostController();
 export default postController;
-
-
-/*
-
- /user
- /post?userId
- */
