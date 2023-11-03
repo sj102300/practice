@@ -19,6 +19,7 @@ class PostController {
     init() {
         this.router.get("/", pagination, this.getPosts.bind(this));
         this.router.get("/:id", this.getPost.bind(this));
+        this.router.get("/my/:userid", this.getMyPosts.bind(this));
         this.router.post("/", this.createPost.bind(this));
         this.router.patch("/:id", this.updatePost.bind(this));
         this.router.delete("/:id", this.deletePost.bind(this));
@@ -76,6 +77,17 @@ class PostController {
             const { id } = req.params;
             await this.postService.deletePost(id);
             res.status(204).json({});
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
+    async getMyPosts(req,res,next){
+        try{
+            const { userid } = req.params;
+            const myPosts = await this.postService.findPostsByUserId(userid);
+            res.status(200).json({ myPosts: myPosts.map((mypost)=>new PostsDTO(mypost))})
         }
         catch(err){
             next(err);

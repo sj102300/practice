@@ -12,6 +12,15 @@ export class PostService {
         return post
     }
 
+    async findPostsByUserId(userId){
+        const posts = await database.post.findMany({
+            where: {
+                userId
+            }
+        })
+        return posts;
+    }
+
     async findPosts({skip, take}) {
         const posts = await database.post.findMany({
             skip, take
