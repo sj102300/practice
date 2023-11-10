@@ -39,6 +39,8 @@ export class UserService {
                 name:props.name,
                 age: props.age,
                 phoneNumber: props.phoneNumber,
+                email: props.email,
+                password: props.password,
             }
         })
         return newUser.id;
@@ -59,6 +61,7 @@ export class UserService {
                 name:props.name,
                 age: undefined, // age에 대해서는 update를 하지않겠다 -> undefined값을 주면 됨
                 phoneNumber: props.phoneNumber,
+                email: props.email
             }
         })
     }
