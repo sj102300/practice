@@ -2,6 +2,16 @@ import database from "../../database";
 
 export class UserService {
 
+    async checkUserByEmail(email){
+        const user = await database.user.findUnique({
+            where:{
+                email
+            }
+        });
+        if(!user) return false;
+        return true;
+    }
+
     async findUserById(id) {
         const user = await database.user.findUnique({
             where: {

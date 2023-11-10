@@ -6,15 +6,25 @@ import Controllers from './controllers';
 import { swaggerDocs, options } from './swagger';
 import swaggerUI from 'swagger-ui-express';
 // import dotenv from 'dotenv';
+// import bcrypt from 'bcrypt';
 // const config = dotenv.config();
 // config.parsed();
 import database from "./database"
 
 
+// const password = '12345';
 (async () => {
     await database.$connect(); // db연동
     //yarn add express
     const app = express();
+
+    // const salt = Number(process.env.PASSWORD_SALT);
+    // const hashedPassword = await bcrypt.hash(password, salt);
+    // console.log({hashedPassword});
+
+    // const isCorrect = await bcrypt.compare(password, hashedPassword);
+    // console.log({isCorrect})
+    
 
     //application level middleware
     app.use(express.urlencoded({ extended: true, limit: '700mb' }));
