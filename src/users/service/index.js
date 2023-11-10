@@ -12,6 +12,19 @@ export class UserService {
         return user
     }
 
+    async findUserWithPosts(id){
+        const user = await database.user.findMany({
+            where: {
+                id
+            },
+            include: {
+                posts: true,
+            },
+        });
+        if (!user) throw { status: 404, message: "유저를 찾을 수 없습니다!'"};
+        return user;
+    }
+
     async findUsers({skip, take}) {
         const users = await database.user.findMany({
             skip, take

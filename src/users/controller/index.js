@@ -19,6 +19,7 @@ class UserController {
     init() {
         this.router.get('/', pagination, this.getUsers.bind(this));
         this.router.get('/:id', this.getUser.bind(this));
+        this.router.get('/posts/:id', this.getUserWithPosts.bind(this));
         this.router.post('/', this.createUser.bind(this));
         this.router.patch('/:id', this.updateUser.bind(this));
         this.router.delete('/:id', this.deleteUser.bind(this));
@@ -33,6 +34,17 @@ class UserController {
             res.status(200).json({ users: users.map((user)=> new UsersDTO(user)), count })
         }
         catch (err) {
+            next(err);
+        }
+    }
+    
+    async getUserWithPosts(req,res,next){
+        try{
+            const { id } = req.params;
+            const user = await this.userService.findUserWithPosts(id);
+            res.status(200).json({ user });    
+        }
+        catch(err){
             next(err);
         }
     }

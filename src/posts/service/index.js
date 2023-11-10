@@ -21,13 +21,24 @@ export class PostService {
         return posts;
     }
 
+    async findPostWithUserInfo(id){
+        const post = await database.post.findUnique({
+            where: {
+                id
+            },
+            include: {
+                user: true,
+            }
+        })
+        return post;
+    }
+
     async findPosts({skip, take}) {
         const posts = await database.post.findMany({
             skip, take
         });
         const count = await database.post.count();
         return { posts, count }
-
     }
 
     async createPost(props) {
