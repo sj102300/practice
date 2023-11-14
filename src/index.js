@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import dayjs from 'dayjs'
-import Controllers from './controllers';
+import {Controllers} from './models';
 import { swaggerDocs, options } from './swagger';
 import swaggerUI from 'swagger-ui-express';
 // import dotenv from 'dotenv';
@@ -35,7 +35,7 @@ import database from "./database"
         console.log('server is running on port 8000');
     })
 
-    //controller 달기
+    // controller 달기
     Controllers.forEach((controller) => {
         app.use(controller.path, controller.router);
     })

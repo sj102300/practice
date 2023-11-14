@@ -1,5 +1,5 @@
-import database from "../../database";
-import { UserService } from '../../users/service/index';
+import database from "../../../database";
+import { UserService } from '../../users/service';
 import { CreateUserDTO } from '../../users/dto/create-user.dto';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';

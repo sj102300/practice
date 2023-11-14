@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { CreatePostDTO, UpdatePostDTO, PostsDTO } from '../dto';
 import { PostService } from '../service';
-import { pagination } from '../../middleware/pagination';
+import { pagination } from '../../../middleware/pagination';
 
 
 class PostController {
