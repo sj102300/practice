@@ -9,7 +9,7 @@ export class UserService {
             }
         });
         if(!user) return false;
-        return true;
+        return user;
     }
 
     async findUserById(id) {

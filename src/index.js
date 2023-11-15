@@ -10,6 +10,7 @@ import swaggerUI from 'swagger-ui-express';
 // const config = dotenv.config();
 // config.parsed();
 import database from "./database"
+import { jwtAuth } from './middleware/jwtAuth';
 
 
 // const password = '12345';
@@ -17,14 +18,6 @@ import database from "./database"
     await database.$connect(); // db연동
     //yarn add express
     const app = express();
-
-    // const salt = Number(process.env.PASSWORD_SALT);
-    // const hashedPassword = await bcrypt.hash(password, salt);
-    // console.log({hashedPassword});
-
-    // const isCorrect = await bcrypt.compare(password, hashedPassword);
-    // console.log({isCorrect})
-    
 
     //application level middleware
     app.use(express.urlencoded({ extended: true, limit: '700mb' }));
@@ -34,6 +27,7 @@ import database from "./database"
     app.listen(8000, () => {
         console.log('server is running on port 8000');
     })
+    app.use(jwtAuth);
 
     // controller 달기
     Controllers.forEach((controller) => {
